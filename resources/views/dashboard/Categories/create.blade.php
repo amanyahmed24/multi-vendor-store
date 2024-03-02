@@ -20,7 +20,7 @@
 
         <label>Parent Category</label>
 
-        <select name="parent_id" class="form-control">
+        <select name="parent-_id" class="form-control">
             <option value="">main category</option>
             @foreach ($parents as $parent)
                 <option value="{{ $parent->id | old('parent_id') }} ">{{ $parent->name }}</option>

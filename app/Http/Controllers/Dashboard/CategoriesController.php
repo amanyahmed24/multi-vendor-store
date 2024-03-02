@@ -135,14 +135,43 @@ class CategoriesController extends Controller
     {
         $category = Category::findOrFail($id);
 
-        $image =  $category->image;
-        if($image !== null){
-            Storage::disk('public')->delete($image);
-        }
         $category->delete();
-
 
         return  redirect()->route('categories.index')
         ->with('deleted' , 'Deleted successfully !');
     }
+    
+//Soft delete Actions
+
+    public function trashed(){
+        $categories= Category::onlyTrashed()->get();
+        return view('dashboard.Categories.index', compact('categories')); 
+    }
+    
+    
+    public function restore(Request $request , $id){
+   
+        $category= Category::onlyTrashed()->findOrFail($id);
+        $category->restore();
+        
+        $categories = Category::all();
+        
+        return view('dashboard.Categories.index', compact('categories'))
+            ->with('success', 'category is restored'); 
+    }
+    
+    public function forceDelete($id){
+        $category= Category::onlyTrashed()->findOrFail($id);
+
+        $image =  $category->image;
+        if($image !== null){
+            Storage::disk('public')->delete($image);
+        }
+        $category->forceDelete();
+        $categories = Category::all();
+        
+        return view('dashboard.Categories.index', compact('categories'))
+        ->with('success', 'category is forceDeleted'); ; 
+    }
+
 }
