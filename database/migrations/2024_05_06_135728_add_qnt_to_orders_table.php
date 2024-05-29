@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedSmallInteger('qnt')->default(0)->after('price');
+            $table->integer('qnt')->default(0);
         });
     }
 

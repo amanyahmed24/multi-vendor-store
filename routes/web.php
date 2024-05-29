@@ -32,7 +32,5 @@ Route::middleware('auth')->group(function () {
 // Route::get('/dashboard' , [DashboardController::class , 'index'])->name('dashboard');
 // Route::resource('/categories', CategoriesController::class);
 
-require __DIR__.'/auth.php';
+// require __DIR__.'/auth.php';
 require __DIR__.'/dashboard.php';
-
-

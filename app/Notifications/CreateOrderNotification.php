@@ -5,6 +5,7 @@ namespace App\Notifications;
 use App\Models\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Notifications\Messages\BroadcastMessage;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -56,10 +57,10 @@ class CreateOrderNotification extends Notification
 
     public function toBroadcast(){
         $addr= $this->order->billingAddr;
-        return[
-           'body'=>'anew order created # '.$this->order->number, 
-           'icon'=>'fas fa-file', 
-           'url'=>'', 
-        ];
+        return new BroadcastMessage([
+            'body'=>'anew order created # '.$this->order->number, 
+            'icon'=>'fas fa-file', 
+            'url'=>'/dashboard', 
+         ]);
     }
 }
