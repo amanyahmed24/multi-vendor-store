@@ -21,6 +21,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/dashboard', [ProfileController::class, 'edit'])->name('profile.edit');
 
 
 Route::middleware('auth')->group(function () {
