@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Dashboard\CategoriesController;
-
+use App\Http\Controllers\Front\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,9 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Route::get('/dashboard', [ProfileController::class, 'edit'])->name('profile.edit');
 
@@ -34,4 +32,4 @@ Route::middleware('auth')->group(function () {
 // Route::resource('/categories', CategoriesController::class);
 
 // require __DIR__.'/auth.php';
-require __DIR__.'/dashboard.php';
+require __DIR__ . '/dashboard.php';

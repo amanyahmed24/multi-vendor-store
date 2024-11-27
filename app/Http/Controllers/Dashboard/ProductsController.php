@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ProductsController extends Controller
@@ -39,7 +41,19 @@ class ProductsController extends Controller
             "slug"=>Str::slug($request->name)
         ]);
 
-        $product = Product::create($request->all());
+        $data = $request->all();
+
+        if($request->hasFile('image')){
+            $file = $request->file('image');
+            $path = $file->store('uploads', 'public');
+            dd($path);
+            $data['image'] = $path;
+        }
+
+        $store = Store::where('user_id',Auth::user()->id)->first(); 
+        $data['store_id'] = $store->id;
+
+        $product = Product::create($data);
 
         return redirect()->route('products.index');
     }

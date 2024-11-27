@@ -12,14 +12,28 @@
 
         <label>Category</label>
 
-        <select>
+        <select name="category_id" >
 
             @foreach ($categories as $category)
-            <option name="{{ $category->id }}">{{ $category->name }}</option>
+            <option  value="{{ $category->id }}">{{ $category->name }}</option>
             @endforeach
 
         </select>
         <br><br>
+
+        <label for="image">Image</label>
+
+        <input type="file" name="image" id="image" class="form-control">
+
+        <br><br>
+
+        <label for="price">Price</label>
+
+        <input type="number" name="price" id="price" class="form-control">
+
+        <br><br>
+
+
 
 
         <input type="submit" value="Add" class="btn btn-outline-success">
