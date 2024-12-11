@@ -22,9 +22,9 @@
                 <tr>
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->category ?  $product->category : "main category"  }}</td>
+                    <td>{{ $product->category ?  $product->category->name : "main category"  }}</td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->img }}</td>
+                    <td> <img src="{{ $product->image_url }}" alt="#" width="90px"></td>
 
                     <td>
                         <form action="{{ route('products.show', $product->id) }}" method="get">

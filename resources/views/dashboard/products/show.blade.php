@@ -2,21 +2,21 @@
 @section('content')
 
 <div class="card">
-    <h2> Details of category : {{ $category->name }}</h2>
+    <h2> Details of Product : {{ $product->name }}</h2>
     <br><br>
 
     <p>
-       Name :: {{ $category->name }}
+       Name :: {{ $product->name }}
     </p>
     <p>
         
-        Description :: {{ $category->description }}</p>
+        Description :: {{ $product->description }}</p>
     <p>
         
-        Parent :: {{ $category->parent }}</p>
+        category :: {{ $product->category->name }}</p>
 </div>
 
 <br><br>
 
-<a href="{{ route('categories.index') }}">Return to all categories</a>
+<a href="{{ route('products.index') }}">Return to all Products</a>
 @endsection

@@ -17,9 +17,8 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
-        return view('dashboard.products.index' , compact('products'));
-        
+        $products = Product::latest()->with('category')->get();
+        return view('dashboard.products.index', compact('products'));
     }
 
     /**
@@ -28,8 +27,7 @@ class ProductsController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('dashboard.products.create' , compact('categories'));
-        
+        return view('dashboard.products.create', compact('categories'));
     }
 
     /**
@@ -38,26 +36,24 @@ class ProductsController extends Controller
     public function store(Request $request)
     {
         $request->merge([
-            "slug"=>Str::slug($request->name)
+            "slug" => Str::slug($request->name)
         ]);
 
         $data = $request->all();
 
-        if($request->hasFile('image')){
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
+            // Store the file and get the path
             $path = $file->store('uploads', 'public');
-            dd($path);
             $data['image'] = $path;
-        }
-
-        $store = Store::where('user_id',Auth::user()->id)->first(); 
+        } 
+        $store = Store::where('user_id', Auth::user()->id)->first();
         $data['store_id'] = $store->id;
 
-        $product = Product::create($data);
+        Product::create($data);
 
         return redirect()->route('products.index');
     }
-
     /**
      * Display the specified resource.
      */
@@ -65,8 +61,8 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view ('dashboard.products.show' , compact('product'));
-        }
+        return view('dashboard.products.show', compact('product'));
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -75,8 +71,7 @@ class ProductsController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        return view ('dashboard.products.edit' , compact('product'));
-        
+        return view('dashboard.products.edit', compact('product'));
     }
 
     /**
@@ -85,11 +80,10 @@ class ProductsController extends Controller
     public function update(Request $request, string $id)
     {
         $product = Product::findOrFail($id);
-        
-        $product->update($request->all());
-        
-         return redirect()->route('products.index');
 
+        $product->update($request->all());
+
+        return redirect()->route('products.index');
     }
 
     /**
@@ -98,8 +92,8 @@ class ProductsController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
-         $product->delete();
+        $product->delete();
 
-         return redirect()->route('products.index');
+        return redirect()->route('products.index');
     }
 }
