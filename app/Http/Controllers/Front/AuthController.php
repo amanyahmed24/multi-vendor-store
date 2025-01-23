@@ -48,16 +48,30 @@ class AuthController extends Controller
                 ], 401);
             }
             $user = Auth::user();
-            $token = $user->createToken('token')->plainTextToken;
-            $cookie = cookie('jwt', $token, 60 * 24);
+            $token = $user->createToken('jwt')->plainTextToken;
+            $cookie = cookie('jwt', $token , 200);
             return response()->json([
                 'Message' => 'Logged in successfully',
                 'token' => $token,
-            ], 200)->withCookie('cookie');
+            ], 200)->withCookie($cookie);
         } catch (Exception $ex) {
             return response()->json([
                 'Error' => $ex->getMessage(),
             ], Response::HTTP_UNAUTHORIZED);
+        }
+    }
+    public function user(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            return response()->json([
+                'Message' => 'success',
+                'user' => $user,
+            ], 200);
+        } catch (Exception $ex) {
+            return response()->json([
+                'Error' => $ex->getMessage(),
+            ], 401);
         }
     }
 }
