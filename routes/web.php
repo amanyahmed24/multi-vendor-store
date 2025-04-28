@@ -17,7 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('products/{product:slug}', [ProductController::class, 'show'])->name('home.products.show');
+
+    Route::group(
+        ["prefix" => 'products'],
+        function () {
+            Route::get('', [ProductController::class, 'index'])->name('home.products.index');
+            Route::get('show/{id}', [ProductController::class, 'show'])->name('home.products.show');
+        }
+    );
 });
 
 
